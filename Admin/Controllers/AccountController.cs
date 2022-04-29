@@ -27,6 +27,8 @@ namespace Admin.Controllers
                 var employee = uow.EmployeeRepository.Login(obj);
                 if(employee != null)
                 {
+                    employee.Role = uow.RoleRepository.ViewDetail(employee.RoleId);
+                    employee.Permissions = uow.PermissionRepository.GetPermissions(employee.RoleId);
                     Session.Add(Shared.Session_Admin, employee);
                     return RedirectToAction("Index", "Home");
                 }
@@ -42,6 +44,11 @@ namespace Admin.Controllers
         {
             Session.Remove(Shared.Session_Admin);
             return RedirectToAction("Login", "Account");
+        }
+
+        public ActionResult UnAuthorized()
+        {
+            return View();
         }
     }
 }

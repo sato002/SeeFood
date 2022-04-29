@@ -1,5 +1,7 @@
-﻿using Admin.Helper;
+﻿using Admin.Attributes;
+using Admin.Helper;
 using Common;
+using Services.Enum;
 using Services.Models;
 using Services.Repository;
 using Services.ViewModels;
@@ -11,9 +13,9 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class ProductController : BaseController
+    public class ProductController : AuthorizeController
     {
-
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Read)]
         public ActionResult Index()
         {
             return View();
@@ -35,11 +37,13 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Create)]
         public ActionResult Create()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Create)]
         [HttpPost]
         public JsonResult Create(ProductViewModel obj)
         {
@@ -88,6 +92,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Read)]
         public JsonResult ViewDetail(int id)
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -100,11 +105,13 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Update)]
         public ActionResult Edit(int id)
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult Edit(ProductViewModel obj)
         {
@@ -160,6 +167,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {
@@ -172,11 +180,13 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Statistic)]
         public ActionResult Statistic()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Statistic)]
         public JsonResult Get_Statistic_Product(int pageIndex, int pageSize, string type)
         {
             if (String.IsNullOrEmpty(type))
@@ -200,6 +210,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Product, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult ChangeIsHot(int id)
         {

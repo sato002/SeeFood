@@ -1,5 +1,7 @@
-﻿using Admin.Helper;
+﻿using Admin.Attributes;
+using Admin.Helper;
 using Common;
+using Services.Enum;
 using Services.Models;
 using Services.Repository;
 using System;
@@ -10,19 +12,21 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class CategoryController : BaseController
+    public class CategoryController : AuthorizeController
     {
-        // GET: Category
+        [BasicAuthorize(ModuleEnum.Category, PermissionEnum.Read)]
         public ActionResult Index()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Category, PermissionEnum.Create)]
         public ActionResult Create()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Category, PermissionEnum.Create)]
         [HttpPost]
         public ActionResult Create(Category obj)
         {
@@ -79,6 +83,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Category, PermissionEnum.Read)]
         public JsonResult ViewDetail(int id)
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -89,6 +94,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Category, PermissionEnum.Update)]
         public ViewResult Edit(int id)
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -98,6 +104,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Category, PermissionEnum.Update)]
         [HttpPost]
         public ActionResult Edit(Category obj)
         {
@@ -125,6 +132,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Category, PermissionEnum.Delete)]
         [HttpPost]
         public JsonResult Delete(int id)
         {
@@ -150,6 +158,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Category, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {

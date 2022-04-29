@@ -19,6 +19,7 @@ namespace Services.Repository
         int Update(Employee obj);
         int Delete(int id);
         bool ChangeStatus(int id);
+        int CountByRole(int roleId);
     }
 
     public class EmployeeRepository : RepositoryBase, IEmployeeRepository
@@ -133,6 +134,23 @@ namespace Services.Repository
                 throw;
             }
         }
+
+        public int CountByRole(int roleId)
+        {
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@RoleId", roleId);
+                p.Add("@Output", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                DbConnect.Execute("Employee_CountByRole", p, transaction: Transaction, commandType: CommandType.StoredProcedure);
+                return p.Get<int>("@Output");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
         private DynamicParameters param(Employee obj, string action = "create")
         {

@@ -1,9 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@using Common;
+@using Services.Models;
+@{
+    var employee = Session[Shared.Session_Admin] as Employee;
+    var name = String.Empty;
+    if (employee != null)
+    {
+        name = !String.IsNullOrEmpty(employee.FullName) == true ? employee.FullName : employee.Email;
+    }
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>Pages - Admin Dashboard UI Kit - Blank Page</title>
+    <title>SeeFood Management</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
     <script type="text/javascript">
         //<![CDATA[
@@ -240,7 +251,7 @@
                 </div>
                 <div class="pull-center hidden-md hidden-lg">
                     <div class="header-inner">
-                       
+
                     </div>
                 </div>
                 <div class="pull-right full-height visible-sm visible-xs">
@@ -253,13 +264,15 @@
             </div>
             <div class="pull-left sm-table hidden-xs hidden-sm">
                 <div class="header-inner">
-                   
+
                 </div>
             </div>
             <div class="pull-right">
                 <div class="visible-lg visible-md m-t-10">
                     <div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
-                        <span class="semi-bold">Admin</span>
+                        <span class="semi-bold">
+                            @name
+                        </span>
                     </div>
                     <div class="dropdown pull-right">
                         <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

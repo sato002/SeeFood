@@ -1,5 +1,7 @@
-﻿using Admin.Helper;
+﻿using Admin.Attributes;
+using Admin.Helper;
 using Common;
+using Services.Enum;
 using Services.Models;
 using Services.Repository;
 using System;
@@ -10,18 +12,21 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class EmployeeController : Controller
+    public class EmployeeController : AuthorizeController
     {
+        [BasicAuthorize(ModuleEnum.Employee, PermissionEnum.Read)]
         public ActionResult Index()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Employee, PermissionEnum.Create)]
         public ActionResult Create()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Employee, PermissionEnum.Create)]
         [HttpPost]
         public ActionResult Create(Employee obj)
         {
@@ -34,7 +39,7 @@ namespace Admin.Controllers
             using (var uow = new UnitOfWork(Shared.connString))
             {
                 obj.CreatedDate = DateTime.Now;
-                obj.Password = MD5HASH.Encryptor.MD5ENCRYPTOR(obj.Password);
+                obj.Password = MD5HASH.Encryptor.MD5ENCRYPTOR(obj.Password + Shared.MD5_KEY); 
                 var res = uow.EmployeeRepository.Create(obj);
                 if (res > 0)
                 {
@@ -77,6 +82,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Employee, PermissionEnum.Update)]
         public ViewResult Edit(int id)
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -86,6 +92,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Employee, PermissionEnum.Update)]
         [HttpPost]
         public ActionResult Edit(Employee obj)
         {
@@ -99,7 +106,7 @@ namespace Admin.Controllers
             {
                 if(!String.IsNullOrEmpty(obj.Password))
                 {
-                    obj.Password = MD5HASH.Encryptor.MD5ENCRYPTOR(obj.Password);
+                    obj.Password = MD5HASH.Encryptor.MD5ENCRYPTOR(obj.Password + Shared.MD5_KEY);
                 }
 
                 var res = uow.EmployeeRepository.Update(obj);
@@ -118,6 +125,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Employee, PermissionEnum.Delete)]
         [HttpPost]
         public JsonResult Delete(int id)
         {
@@ -143,6 +151,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Employee, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {

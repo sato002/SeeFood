@@ -1,5 +1,7 @@
-﻿using Admin.Helper;
+﻿using Admin.Attributes;
+using Admin.Helper;
 using Common;
+using Services.Enum;
 using Services.Models;
 using Services.Repository;
 using System;
@@ -10,18 +12,21 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class RoleController : Controller
+    public class RoleController : AuthorizeController
     {
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Read)]
         public ActionResult Index()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Create)]
         public ActionResult Create()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Create)]
         [HttpPost]
         public ActionResult Create(Role obj)
         {
@@ -77,6 +82,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Read)]
         public JsonResult ViewDetail(int id)
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -88,6 +94,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Update)]
         public ViewResult Edit(int id)
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -97,6 +104,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Update)]
         [HttpPost]
         public ActionResult Edit(Role obj)
         {
@@ -124,12 +132,13 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Delete)]
         [HttpPost]
         public JsonResult Delete(int id)
         {
             using (var uow = new UnitOfWork(Shared.connString))
             {
-                var numberOfProducts = uow.ProductRepository.CountByCate(id);
+                var numberOfProducts = uow.EmployeeRepository.CountByRole(id);
                 if (numberOfProducts > 0)
                 {
                     return Json(new
@@ -149,6 +158,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult ChangeStatus(int id)
         {
@@ -161,6 +171,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Config)]
         public ActionResult Config(int id)
         {
             ViewBag.RoleId = id;
@@ -176,6 +187,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Role, PermissionEnum.Config)]
         [HttpPost]
         public ActionResult Config(int roleId, List<Permission> lsPer)
         {

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : AuthorizeController
     {
         public ActionResult Index()
         {

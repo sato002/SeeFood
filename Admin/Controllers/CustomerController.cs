@@ -1,5 +1,7 @@
-﻿using Admin.Helper;
+﻿using Admin.Attributes;
+using Admin.Helper;
 using Common;
+using Services.Enum;
 using Services.Repository;
 using Services.ViewModels;
 using System;
@@ -10,9 +12,9 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class CustomerController : BaseController
+    public class CustomerController : AuthorizeController
     {
-
+        [BasicAuthorize(ModuleEnum.Customer, PermissionEnum.Read)]
         public ActionResult Index()
         {
             return View();
@@ -33,6 +35,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Customer, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult ChangeStatus(int Id)
         {
@@ -64,6 +67,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Customer, PermissionEnum.Update)]
         public ViewResult Edit(int id)
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -73,7 +77,7 @@ namespace Admin.Controllers
             }
         }
 
-        
+        [BasicAuthorize(ModuleEnum.Customer, PermissionEnum.Update)]
         [HttpPost]
         public ActionResult Edit(CustomerViewModel obj)
         {

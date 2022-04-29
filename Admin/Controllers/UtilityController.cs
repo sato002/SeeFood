@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class UtilityController : BaseController
+    public class UtilityController : AuthorizeController
     {
         // GET: Utility
         public ActionResult ContactUs()

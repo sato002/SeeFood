@@ -28,5 +28,10 @@ namespace Services.Models
 
         [StringLength(255)]
         public string CreatedBy { get; set; }
+
+        [NotMapped]
+        public Role Role { get; set; }
+        [NotMapped]
+        public List<Permission> Permissions { get; set; }
     }
 }

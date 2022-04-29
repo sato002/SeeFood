@@ -1,6 +1,8 @@
-﻿using Common;
+﻿using Admin.Attributes;
+using Common;
 using Services.Apriori;
 using Services.Apriori.Models;
+using Services.Enum;
 using Services.Models;
 using Services.Repository;
 using System;
@@ -11,19 +13,21 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class AprioriController : Controller
+    public class AprioriController : AuthorizeController
     {
-        // GET: Apriori
+        [BasicAuthorize(ModuleEnum.Apriori, PermissionEnum.Config)]
         public ActionResult Index()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Apriori, PermissionEnum.Read)]
         public ActionResult Result()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Apriori, PermissionEnum.Config)]
         public JsonResult GetOrders()
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -36,6 +40,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Apriori, PermissionEnum.Config)]
         public JsonResult GetSupports()
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -48,6 +53,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Apriori, PermissionEnum.Config)]
         [HttpPost]
         public JsonResult Execute(double minSupport, double confidence)
         {
@@ -65,6 +71,7 @@ namespace Admin.Controllers
 
         }
 
+        [BasicAuthorize(ModuleEnum.Apriori, PermissionEnum.Config)]
         [HttpPost]
         public JsonResult SaveResult(List<AprioriRule> rules)
         {
@@ -89,6 +96,7 @@ namespace Admin.Controllers
            
         }
 
+        [BasicAuthorize(ModuleEnum.Apriori, PermissionEnum.Config)]
         [HttpGet]
         public JsonResult GetRules()
         {

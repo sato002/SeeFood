@@ -1,5 +1,7 @@
-﻿using Admin.Helper;
+﻿using Admin.Attributes;
+using Admin.Helper;
 using Common;
+using Services.Enum;
 using Services.Models;
 using Services.Repository;
 using System;
@@ -10,9 +12,9 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class NewsController : BaseController
+    public class NewsController : AuthorizeController
     {
-        // GET: News
+        [BasicAuthorize(ModuleEnum.News, PermissionEnum.Read)]
         public ActionResult Index()
         {
 
@@ -36,11 +38,13 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.News, PermissionEnum.Create)]
         public ActionResult Create()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.News, PermissionEnum.Create)]
         [HttpPost]
         public ActionResult Create(News obj)
         {
@@ -62,6 +66,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.News, PermissionEnum.Update)]
         public ActionResult Edit(int id)
         {
             return View();
@@ -79,6 +84,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.News, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult Edit(News obj)
         {
@@ -105,6 +111,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.News, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult ChangePublished(int Id)
         {

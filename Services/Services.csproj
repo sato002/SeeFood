@@ -69,6 +69,8 @@
     <Compile Include="Apriori\Output.cs" />
     <Compile Include="Apriori\Rule.cs" />
     <Compile Include="Apriori\Sorter.cs" />
+    <Compile Include="Enum\PermissionEnum.cs" />
+    <Compile Include="Enum\ModuleEnum.cs" />
     <Compile Include="Models\AddressDelivery.cs" />
     <Compile Include="Models\AprioriRule.cs" />
     <Compile Include="Models\CartItem.cs" />

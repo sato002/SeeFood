@@ -1,5 +1,7 @@
-﻿using Admin.Helper;
+﻿using Admin.Attributes;
+using Admin.Helper;
 using Common;
+using Services.Enum;
 using Services.Repository;
 using Services.ViewModels;
 using System;
@@ -10,9 +12,9 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
-    public class OrderController : BaseController
+    public class OrderController : AuthorizeController
     {
-        // GET: Order
+        [BasicAuthorize(ModuleEnum.Order, PermissionEnum.Read)]
         public ActionResult Index()
         {
             return View();
@@ -34,6 +36,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Order, PermissionEnum.Update)]
         [HttpPost]
         public JsonResult ChangeStatus(int orderId, int statusId)
         {
@@ -59,6 +62,7 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Order, PermissionEnum.Read)]
         public PartialViewResult ViewOrder(SearchOrderViewModel obj)
         {
             using (var uow = new UnitOfWork(Shared.connString))
@@ -74,11 +78,13 @@ namespace Admin.Controllers
             }
         }
 
+        [BasicAuthorize(ModuleEnum.Order, PermissionEnum.Statistic)]
         public ActionResult Order_Statistics()
         {
             return View();
         }
 
+        [BasicAuthorize(ModuleEnum.Order, PermissionEnum.Statistic)]
         [HttpPost]
         public JsonResult Order_Statistics_ByDay(string fromDate, string toDate)
         {
