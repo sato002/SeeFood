@@ -179,5 +179,49 @@ namespace Customers.Controllers
                 return View(res);
             }
         }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordViewModel obj)
+        {
+            var customer = (CustomerViewModel)Session[Shared.Session_Customer];
+
+            if (customer == null)
+                return Redirect("/");
+
+            if (!ModelState.IsValid)
+            {
+                return View(obj);
+            }
+
+            obj.Password = MD5HASH.Encryptor.MD5ENCRYPTOR(obj.Password + Shared.MD5_KEY);
+            obj.NewPassword = MD5HASH.Encryptor.MD5ENCRYPTOR(obj.NewPassword + Shared.MD5_KEY); ;
+            obj.ConfirmNewPassword = MD5HASH.Encryptor.MD5ENCRYPTOR(obj.ConfirmNewPassword + Shared.MD5_KEY); ;
+
+            if (obj.NewPassword != obj.ConfirmNewPassword)
+            {
+                ModelState.AddModelError("", "Mật khẩu mới và Xác thực mật khẩu mới không chính xác");
+                return View(obj);
+            }
+
+            using (var uow = new UnitOfWork(Shared.connString))
+            {
+                obj.Email = customer.Email;
+                var res = uow.CustomerRepository.ChangePassword(obj);
+                uow.Commit();
+                if (res == -1)
+                {
+                    ModelState.AddModelError("", "Mật khẩu hiện tại không chính xác");
+                    return View(obj);
+                }
+
+                ViewBag.Success = true;
+                return View();
+            }
+        }
     }
 }

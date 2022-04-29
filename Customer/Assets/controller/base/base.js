@@ -61,6 +61,10 @@
                 }
                 
             });
+            $('#btn-change-password').off('click').on('click', function (e) {
+                e.preventDefault();
+                location.href = '/doi-mat-khau';
+            })
         },
         addToCart: function (productId,quantity) {
             if (quantity == null)

@@ -20,6 +20,8 @@ namespace Services.Repository
         int Update(CustomerViewModel obj);
 
         bool ContactUs_Insert(ContactUs obj);
+
+        int ChangePassword(ChangePasswordViewModel obj);
     }
 
     public class CustomerRepository : RepositoryBase, ICustomerRepository
@@ -69,6 +71,24 @@ namespace Services.Repository
                 p.Add("@Password", obj.Password);
                 p.Add("@Output", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 DbConnect.Execute("Customer_Login", p, commandType: CommandType.StoredProcedure, transaction: Transaction);
+                return p.Get<int>("@Output");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public int ChangePassword(ChangePasswordViewModel obj)
+        {
+            try
+            {
+                var p = new DynamicParameters();
+                p.Add("@Email", obj.Email);
+                p.Add("@Password", obj.Password);
+                p.Add("@NewPassword", obj.NewPassword);
+                p.Add("@Output", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                DbConnect.Execute("Customer_ChangePassword", p, commandType: CommandType.StoredProcedure, transaction: Transaction);
                 return p.Get<int>("@Output");
             }
             catch (Exception)

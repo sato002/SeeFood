@@ -38,6 +38,18 @@ namespace Customers
             );
 
             routes.MapRoute(
+                name: "Quên mật khẩu",
+                url: "quen-mat-khau",
+                defaults: new { controller = "Account", action = "ForgotPassword" }
+            );
+
+            routes.MapRoute(
+                name: "Đổi mật khẩu",
+                url: "doi-mat-khau",
+                defaults: new { controller = "Account", action = "ChangePassword" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

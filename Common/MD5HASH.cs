@@ -14,6 +14,9 @@ namespace Common
         {
             public static string MD5ENCRYPTOR(string text)
             {
+                if (String.IsNullOrEmpty(text))
+                    return text;
+
                 MD5 md5 = new MD5CryptoServiceProvider();
 
                 //compute hash from the bytes of text
