@@ -228,8 +228,8 @@
                     $('input#Published').prop('checked', res.data.Published);
                     $('input#IsHot').prop('checked', res.data.IsHot);
 
-                    // binding ckeditor
-                    CKEDITOR.instances['txtDetail'].setData(res.data.Detail,null,3500);
+                    $('#txtDetail').html(res.data.Detail);
+                    editor.setData(res.data.Detail);
 
                     // binding avatar
                     if (res.data.Images != null && res.data.Images != "")

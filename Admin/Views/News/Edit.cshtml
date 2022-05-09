@@ -124,8 +124,8 @@
                     $('textarea#Description').val(res.data.Description);
                     $('input#Published').prop('checked', res.data.Published);
 
-                    // binding ckeditor
-                    CKEDITOR.instances['txtDetail'].setData(res.data.Detail,null, 2500);
+                    $('#txtDetail').html(res.data.Detail);
+                    editor.setData(res.data.Detail);
 
                     // binding avatar
                     if (res.data.Avatar != null && res.data.Avatar != "") {
