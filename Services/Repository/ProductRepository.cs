@@ -140,6 +140,7 @@ namespace Services.Repository
             p.Add("@Published", obj.Published);
             p.Add("@IsHot", obj.IsHot);
             p.Add("@Quantity", obj.Quantity);
+            p.Add("@Unit", obj.Unit);
 
             return p;
         }

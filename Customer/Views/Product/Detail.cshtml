@@ -119,16 +119,6 @@
                     </div>
                     <div class="right pull-right col-sm-6 col-xs-12">
                         <h2>@Model.Name</h2>
-                        @*<div class="rating">
-                                <p>
-                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                    <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i></span>
-                                    <span class="fa fa-stack fa-hidden"><i class="fa fa-star fa-stack-2x"></i></span>
-                                    <a href="javascript:void(0)">Write a review</a>
-                                </p>
-                            </div>*@
                         <ul class="list-unstyled description">
                             <li>Mã sản phẩm: @Model.Code</li>
                             <li>Lượt xem: @Model.View</li>
@@ -140,6 +130,7 @@
                             {
                                 <li>Tình trạng: <span style="color:#f37432;">Hết hàng</span></li>
                             }
+                            <li>Đơn vị tính: <span>@Model.Unit</span></li>
                         </ul>
                         <div>
                             <label class="control-label" for="input-quantity">Số lượng</label>
@@ -149,7 +140,6 @@
                                 <button onclick="changeQty(1); return false;" class="increase">+</button>
                             </div>
                             <input type="hidden" name="product_id" value="42" />
-                            @*<div class="alert alert-info"><i class="fa fa-info-circle"></i> This product has a minimum quantity of 2</div>*@
                             <div class="price_info">
                                 @if (Model.SaleOff > 0)
                                 {

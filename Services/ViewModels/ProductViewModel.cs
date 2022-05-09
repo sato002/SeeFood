@@ -31,9 +31,9 @@ namespace Services.ViewModels
 
         [Required(ErrorMessage = "Vui lòng chọn Ảnh đại diện")]
         public string Avatar { get; set; }
-
         [Required(ErrorMessage = "Vui lòng nhập Số lượng")]
         public int Quantity { get; set; }
+        public string Unit { get; set; }
 
         [Required(ErrorMessage = "Vui lòng nhập Giá nhập")]
         public decimal? UnitPrice { get; set; }
