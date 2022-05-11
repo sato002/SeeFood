@@ -78,12 +78,10 @@
             });
         },
         checkOut: function () {
-            debugger
             $.ajax({
                 url: '/Cart/validateQuantity',
                 type: 'post',
                 success: function (res) {
-                    debugger
                     if (res.status > 0) {
                         location.href = '/CheckOut/Step1';
                     }
