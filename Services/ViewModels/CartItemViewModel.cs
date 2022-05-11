@@ -15,5 +15,6 @@ namespace Services.ViewModels
         public string avatar { get; set; }
         public decimal Amount { get; set; }
         public decimal LastAmount { get; set; }
+        public bool OutofQuantity { get; set; }
     }
 }

@@ -98,7 +98,8 @@ namespace Customers.Controllers
             else
             {
                 if (String.IsNullOrEmpty(localCart) || localCart == "undefined")
-                    return Json(new {
+                    return Json(new
+                    {
                         status = true,
                         totalItem = -1
                     });
@@ -161,8 +162,43 @@ namespace Customers.Controllers
                     data = new JavaScriptSerializer().Serialize(ssCart),
                     totalRow = ssCart.Count,
                     html = RenderHelper.PartialView(this, "/Views/Cart/_cartBox.cshtml", ssCart)
-                },JsonRequestBehavior.AllowGet);
+                }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        public JsonResult validateQuantity()
+        {
+            if (Session[Constant.Cart_Session] == null)
+                return Json(new { status = 1 });
+
+            bool outOfQuantity = false;
+            List<CartItemViewModel> ssCart = (List<CartItemViewModel>)Session[Constant.Cart_Session];
+            using (var uow = new UnitOfWork(Shared.connString))
+            {
+                foreach (var item in ssCart)
+                {
+                    var product = uow.ProductRepository.ViewDetail(item.productId);
+                    if (item.quantity > product.Quantity)
+                    {
+                        item.OutofQuantity = true;
+                        outOfQuantity = true;
+                    }
+                }
+            }
+
+            if(outOfQuantity)
+            {
+                return Json(
+                            new
+                            {
+                                status = -1,
+                                data = ssCart
+                            }
+                        );
+            }
+
+            return Json(new { status = 1 });
         }
     }
 }
